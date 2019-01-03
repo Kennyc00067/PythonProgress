@@ -42,7 +42,7 @@ def exitProgram(): # Exit Program Function Deffinition.
 
 # Main Function Deffinition
 def main():
-    #printProgramInfo()
+    printProgramInfo()
     
     while True:
         menu = " 1. Password Cracker\n"
