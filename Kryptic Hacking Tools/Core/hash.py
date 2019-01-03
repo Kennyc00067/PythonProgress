@@ -27,7 +27,7 @@ def dataChoiceOne(pass_in, hash):
         hash = hashlib.md5
 
     try:
-        passwordFile = open(os.chdir("../Default/default.txt"), "r")
+        passwordFile = open("./Default/default.txt", "r")
     except: 
         print("\nFile Not Found.")
         return
@@ -63,9 +63,9 @@ def dataChoiceTwo(fileName, pass_in, hash):
         hash = hashlib.md5
 
     try:
-        passwordFile = open(os.chdir("../User List/" + fileName), "r")
+        passwordFile = open("./User List/" + fileName, "r")
     except: 
-        print("\nFile Not Found.")
+        print("\nFile Not Found.aaa")
         return
     
     passNumber = 0
@@ -81,7 +81,6 @@ def dataChoiceTwo(fileName, pass_in, hash):
 
 
     passwordFile.close()
-    print("\nPassword Not Found.")
     return
 
 def hash():
@@ -93,23 +92,20 @@ def hash():
         else:
             print("\nHash Type Not Found.")
 
-    user_password = input("\nPlease enter the {} Hash: ".format(hashtype.upper()))
+    user_password = input("\n{} Hash: ".format(hashtype.upper()))
 
     choice = input("\nLists\n 1. Default \n 2. Custom List (../User List) ")
 
     if choice in ["1"]:
         dataChoiceOne(user_password, hashtype.lower())
     if choice in ["2"]:
-        while True:
-            user_FileName = input("\nPassword List: ")
-            if ".txt" or ".lst" not in user_FileName:
-                try:
-                    user_FileName = open(os.chdir("../User List/" + user_FileName + ".txt"), "r")
-                except:
-                    try:
-                        user_FileName = open(os.chdir("../User List/"+ user_FileName + ".lst"), "r")
-                    except: 
-                        print("File Not found")
-            user_FileName.close()
-        dataChoiceTwo(user_FileName, user_password, hashtype.lower())
+        user_FileName = input("\nPassword List: ")
+        if ".txt" not in user_FileName or ".lst" not in user_FileName:
+            try:
+                user_FileName += ".txt"
+                dataChoiceTwo(user_FileName, user_password, hashtype.lower())
+            except:
+                user_FileName += ".lst"
+                dataChoiceTwo(user_FileName, user_password, hashtype.lower())
+
     return
