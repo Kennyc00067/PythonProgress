@@ -3,6 +3,8 @@
 # Local Libraries
 from Core import email as coreEmail
 from Core import hash
+from Core import bruteGuess
+from Core import arps_spoof
 
 # Libraries
 
@@ -10,17 +12,23 @@ from Core import hash
 import os
 import time
 
+try:
+    # check whether user is root
+    if os.geteuid() != 0:
+        print("\n{}ERROR: Kryptic Hacking Tools must be run with root privileges. Try again with sudo:\n\t{}$ sudo python3 KrypticHackingTools.py{}\n".format(RED, GREEN, END))
+        os._exit(1)
+except:
+    # then user is probably on windows
+    pass
+
 # Function Deffinitions
 def printProgramInfo():
     author = "*** Kryptic Studios ***"
     program = "*** Hacking Tools ***"
 
     print(author)
-    time.sleep(5)
     print(program)
-    time.sleep(5)
     
-    os.system('clear')
     return
 
 def exitProgram(): # Exit Program Function Deffinition.
@@ -45,7 +53,7 @@ def main():
     printProgramInfo()
     
     while True:
-        menu = " 1. Password Cracker\n"
+        menu = " 1. Password Cracker\n 2. Spoofing\n"
         print(menu)
         userInput = input("Choose your poision: ")
 
@@ -77,8 +85,36 @@ def main():
 
             if pcInput in ["2"]:
                 os.system('clear')
-                print("Hack Password Cracker")
+                print("Hash Password Cracker")
                 hash.hash()
+
+            if pcInput in ["3"]:
+                os.system('clear')
+                print("Brute Force Password Cracker(WIP)")
+                bruteGuess.bruteGuess()
+        if userInput in ["2"]:
+            os.system('clear')
+
+            print("\nSpoofer")
+            spoofMenu = " 1. Get Clients\n 2. Sniff Web Traffic\n 3. Dns Spoof"
+            print(spoofMenu)
+            spoofInput = input("Choose your poision: ")
+
+            if spoofInput in ["1"]:
+                os.system('clear')
+                print("LAN Clients")
+                arps_spoof.get_clients_OnLan()
+
+            if spoofInput in ["2"]:
+                os.system('clear')
+                print("Sniff Traffic")
+                arps_spoof.traffic_sniff()
+            
+            if spoofInput in ["3"]:
+                os.system('clear')
+                print("HTTP Redirect")
+                arps_spoof.httpRedirect()
+
         if exitProgram() == True:
             try:
                 exit() # Exit program.
