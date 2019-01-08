@@ -5,21 +5,19 @@ from Core import email as coreEmail
 from Core import hash
 from Core import bruteGuess
 from Core import arps_spoof
-
+from Core import IPspoof
+from Core import urlIP
 # Libraries
 
 # Standard Libraries
 import os
 import time
 
-try:
-    # check whether user is root
-    if os.geteuid() != 0:
-        print("\n{}ERROR: Kryptic Hacking Tools must be run with root privileges. Try again with sudo:\n\t{}$ sudo python3 KrypticHackingTools.py{}\n".format(RED, GREEN, END))
-        os._exit(1)
-except:
-    # then user is probably on windows
-    pass
+
+# check whether user is root
+#if os.geteuid() != 0:
+#    print("\nERROR: Kryptic Hacking Tools must be run with root privileges. Try again with sudo: sudo python3 KrypticHackingTools.py3\n")
+#    os._exit(1)
 
 # Function Deffinitions
 def printProgramInfo():
@@ -96,24 +94,38 @@ def main():
             os.system('clear')
 
             print("\nSpoofer")
-            spoofMenu = " 1. Get Clients\n 2. Sniff Web Traffic\n 3. Dns Spoof"
+            spoofMenu = " 1. Get Clients\n 2. Monitor Clients\n 3. Sniff Client Traffic\n 4. DDos Attack\n 5. IP Spoofing\n 6. URL IP Grabber"
             print(spoofMenu)
             spoofInput = input("Choose your poision: ")
 
             if spoofInput in ["1"]:
                 os.system('clear')
-                print("LAN Clients")
+                print("(W)LAN Clients")
                 arps_spoof.get_clients_OnLan()
 
             if spoofInput in ["2"]:
                 os.system('clear')
-                print("Sniff Traffic")
-                arps_spoof.traffic_sniff()
-            
+                print("Monitor (W)LAN Clients")
+                arps_spoof.monitor_clients_OnLan()
+
             if spoofInput in ["3"]:
                 os.system('clear')
-                print("HTTP Redirect")
-                arps_spoof.httpRedirect()
+                print("Sniff Client Traffic")
+                arps_spoof.traffic_sniff()
+
+            if spoofInput in ["4"]:
+                os.system('clear')
+                print("DDos Attack")
+                arps_spoof.ddosAttack()
+            
+            if spoofInput in ["5"]:
+                os.system('clear')
+                print("IP Spoofing")
+                IPspoof.ipSpoof()
+            if spoofInput in ["6"]:
+                os.system('clear')
+                print("URL IP Grabber")
+                urlIP.get_ip_address()
 
         if exitProgram() == True:
             try:
