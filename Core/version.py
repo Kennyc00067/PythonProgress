@@ -5,16 +5,29 @@
 # Libraries
 
 # Standard Libraries
-import urllib2
+import urllib.request
+import curses
+import webbrowser
 
 # Function Deffinitions
 def CheckVersion():
     print("Checking for update.....")
-    versionTxtF = open("version.txt", "r")
+    versionTxtF = open("Core/version.txt", "r")
 
-    versionLink = "https://github.com/KrypticStudio/KrypticHackingTools/blob/master/Core/version.txt"
+    versionLink = "https://raw.githubusercontent.com/KrypticStudio/KrypticHackingTools/master/Core/version.txt"
 
-    data = urllib2.urlopen(versionLink)
+    uptodatev = urllib.request.urlopen(versionLink)
+    liveversion = None
+    version = None
+    for line in uptodatev: # files are iterable
+        liveversion = line[9:]
 
-    for line in data: # files are iterable
-        print (line)
+    liveversion = liveversion.decode()
+    for line in versionTxtF:
+        version = line[9:]
+
+    if version == liveversion:
+        print("Kryptic Hacking Tools is up to date!")
+    elif version != liveversion:
+        print("***UPDATE {} AVAILABLE*** \n - Some features may not work as intended until you update to the newest version.\n - Visit https://github.com/KrypticStudio/KrypticHackingTools to update! \n".format(liveversion))
+        webbrowser.open("https://github.com/KrypticStudio/KrypticHackingTools")
