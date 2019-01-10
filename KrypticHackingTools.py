@@ -7,6 +7,7 @@ from Core import bruteGuess
 from Core import arps_spoof
 from Core import IPspoof
 from Core import urlIP
+from Core import version
 # Libraries
 
 # Standard Libraries
@@ -48,6 +49,7 @@ def exitProgram(): # Exit Program Function Deffinition.
 
 # Main Function Deffinition
 def main():
+    version.CheckVersion()
     printProgramInfo()
     
     while True:

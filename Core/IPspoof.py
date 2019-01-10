@@ -4,9 +4,11 @@ import sys
 from random import randint
 import contextlib
 from socket import gethostbyname
+from Core import arps_spoof
 
 def ipSpoof():
     try:
+        arps_spoof.get_clients_OnLan()
         targetIP = input("Target IP: ")
         destinationIP = input("Destination IP: ")
         data = input("Packet Data(Optional): ")
